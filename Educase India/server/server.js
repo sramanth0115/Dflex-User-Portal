@@ -11,8 +11,6 @@ app.use(express.json())
 app.use(cors());
 
 const PORT = process.env.PORT || 3000;
-app.use(express.static(path.join(__dirname, '../dist')));
-
 
 
 let start_server = async()=>{
@@ -158,12 +156,12 @@ app.post('/getPosts', Authentication, async(req, resp)=>{
 })
 
 
+app.get('/', (req, res) => {
+    res.send('Dflex API is running 🚀')
+  })
+  
 
 
 
-
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../dist/index.html'));
-});
 
 
