@@ -26,33 +26,35 @@ export class LoginP extends Component {
             let checkLoginValue = false
             let checkLogin = async()=>{
                 try {
-                    const data = {email:email, pass:pass}
-                    getToken = await axios.post("http://localhost:3001/login", data) 
-                    getToken = getToken.data
-                    console.log('In LoginPage:',getToken)
-                    if (typeof(getToken) === typeof({hello:1})){
-                        const getData = {
-                            headers:{'authorization':`Bearer ${getToken.token}`}
-                        }
-                        let getrows = await axios.get("http://localhost:3001/user", getData)
-                        getrows = getrows.data
-                        console.log('In LoginPage:',getrows)
-                        if(typeof(getrows) === typeof({hello:1})){
-                            getUserData = getrows
-                            getToken = getToken.token
-                            checkLoginValue = true
-                        }else if(typeof(getrows) === typeof("hello")){
-                            this.setState(prev => ({email:prev.email, pass:prev.pass, serverMessage:getrows}))
+                    if(email ==='' || pass ===""){
+                        this.setState({serverMessage:'Please fill in all required fields'})
+                    }else {
+                        const data = {email:email, pass:pass}
+                        getToken = await axios.post("http://localhost:3001/login", data) 
+                        getToken = getToken.data
+                        if (typeof(getToken) === typeof({hello:1})){
+                            const getData = {
+                                headers:{'authorization':`Bearer ${getToken.token}`}
+                            }
+                            let getrows = await axios.get("http://localhost:3001/user", getData)
+                            getrows = getrows.data
+                            if(typeof(getrows) === typeof({hello:1})){
+                                getUserData = getrows
+                                getToken = getToken.token
+                                checkLoginValue = true
+                            }else if(typeof(getrows) === typeof("hello")){
+                                this.setState(prev => ({email:prev.email, pass:prev.pass, serverMessage:getrows}))
+                            }else{
+                                this.setState(prev => ({email:prev.email, pass:prev.pass, serverMessage:"Server is down3"}))    
+                            }
+
+
+                        }else if(typeof(getToken) === typeof('Hello')){
+                            this.setState(prev => ({email:prev.email, pass:prev.pass, serverMessage:getToken}))
                         }else{
-                            this.setState(prev => ({email:prev.email, pass:prev.pass, serverMessage:"Server is down3"}))    
+                            this.setState(prev => ({email:prev.email, pass:prev.pass, serverMessage:"Server is down2"}))
                         }
-
-
-                    }else if(typeof(getToken) === typeof('Hello')){
-                        this.setState(prev => ({email:prev.email, pass:prev.pass, serverMessage:getToken}))
-                    }else{
-                        this.setState(prev => ({email:prev.email, pass:prev.pass, serverMessage:"Server is down2"}))
-                    }
+                }
 
                 } catch (error) {
                     this.setState(prev => ({email:prev.email, pass:prev.pass, serverMessage:"Server is down1"}))

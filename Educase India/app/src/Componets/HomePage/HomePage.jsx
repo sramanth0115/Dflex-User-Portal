@@ -18,8 +18,9 @@ class HomeP extends Component{
 
         return (
             <div className='homeContainer'>
-                <h1 className='homeHead'> Welcome to PopX </h1> 
-                <p className='homePara'> Popx India Private Limited is an IT company that focuses on application development and software solutions in the information technology sector </p>
+                <h1 className='homeHead'> Welcome to Dflex </h1> 
+                <p className='homePara'> Dflex is a web platform that allows users to create accounts, log in securely, and share posts seamlessly.
+It focuses on providing a clean, user-friendly experience for managing user content and interactions </p>
                 <button className='homeButton1' onClick={goToCrete}> Create Account </button>
                 <button className='homeButton2' onClick={goToLogin}> Already Registered? Login </button> 
             </div>

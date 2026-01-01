@@ -90,7 +90,6 @@ app.post('/login', async(req, resp)=>{
             if(checK_pass){
                 const payload = {email:user.Email}
                 let token = jwtToken.sign(payload, 'Educase India')
-                console.log(token)
                 resp.send({token:token})                
             }else{
                 resp.send('Wrong Password')
@@ -112,7 +111,6 @@ app.get('/user', Authentication, async(req, resp)=>{
         const userData = await db_obj.get('select * from userData where email=?', [userEmail])
         if (userData !== undefined){
             resp.send(userData)
-            console.log(userData)
         }else{
             resp.send('User Data is Not Present')
         }
@@ -150,7 +148,6 @@ app.post('/getPosts', Authentication, async(req, resp)=>{
         const userData = await db_obj.all('select * from loginUser where user_id=?', [Id])
         if (userData.length !== 0){
             resp.send(userData)
-            console.log(userData)
         }else{
             resp.send('User Data is Not Present')
         }

@@ -32,10 +32,20 @@ class CreateP extends Component {
         const createAccount = async(event) => {
             event.preventDefault();
                 try {
-                    let data = {name:fullname, phone:phone, email:email, pass:pass, company:company}
-                    let getrows = await axios.post("http://localhost:3001/create", data) 
-                    this.setState(prev => ({fullname:prev.fullname, phone:prev.phone, email:prev.email, pass:prev.pass, company:prev.company, serverMessage:getrows.data}))                                 
-                    console.log('In CreatePage:', getrows);
+                    if(fullname==='' || phone==='' || email===''|| pass ==='' || company === ''){
+                        this.setState({serverMessage:'Please fill in all required fields'})
+                    } else if (!email.toLowerCase().endsWith('@gmail.com')){
+                        this.setState({serverMessage:'Please enter a valid gmail address'})
+                    } else if(pass.length < 6){
+                        this.setState({serverMessage:'Password is too short'})
+                    } else if(phone.length !== 10){
+                        this.setState({serverMessage:'Invalid phone number'})
+                    }
+                    else{
+                        let data = {name:fullname, phone:phone, email:email, pass:pass, company:company}
+                        let getrows = await axios.post("http://localhost:3001/create", data) 
+                        this.setState(prev => ({fullname:prev.fullname, phone:prev.phone, email:prev.email, pass:prev.pass, company:prev.company, serverMessage:getrows.data}))                                 
+                    }
 
                 } catch (error) {
                     this.setState(prev => ({fullname:prev.fullname, phone:prev.phone, email:prev.email, pass:prev.pass, company:prev.company, serverMessage:"Server is down"}))

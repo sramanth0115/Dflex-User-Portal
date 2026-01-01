@@ -35,7 +35,6 @@ class UserP extends Component {
 
       if (Array.isArray(lists)) {
         this.setState({ listOfPosts: lists }) // ✅ same variable updated
-        console.log(this.state.listOfPosts,'end')
       }
     } catch (error) {
       console.error('Error fetching posts:', error)
@@ -91,7 +90,7 @@ class UserP extends Component {
         <h1 className='userHead1'>Account Setting</h1>
 
         <div className='userCard1'>
-          <img className='userImg1' src='' alt=''/>
+          <img className='userImg1' src='/UserLogo.jpg' alt='logo'/>
           <div>
             <h1 className='userHead1'>{Name}</h1>
             <p className='userPara1'>{Email}</p>
